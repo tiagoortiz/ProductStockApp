@@ -15,14 +15,10 @@ class CreateProductTransactionsTable extends Migration
     {
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->bigIncrements('product_transaction_id');
-            $table->integer('product_id');            
+            $table->foreignId('product_id')->constrained();           
             $table->integer('quantity');
             $table->string('type', 16); // If transaction was made by system or API
-            $table->dateTime('created_at');
-            $table->timestamps();
-
-            // Add the foreign key and reference the product_id on product table
-            $table->foreign('product_id')->references('product_id')->on('product');
+            $table->timestamps();            
         });
     }
 
