@@ -15,7 +15,7 @@ class CreateProductTransactionsTable extends Migration
     {
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->bigIncrements('product_transaction_id');
-            $table->foreignId('product_id')->constrained();           
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();           
             $table->integer('quantity');
             $table->string('type', 16); // If transaction was made by system or API
             $table->timestamps();            
