@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\ProductTransactions;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -42,7 +43,6 @@ class ProductController extends Controller
             'sku'=>'required',
             'quantity_available'=>'required|regex:/^-?[0-9]+$/'
         ]); 
-        
         try {
             $product = new Product([
                 'name' => $request->get('name'),
@@ -50,15 +50,16 @@ class ProductController extends Controller
                 'description' => $request->get('description'),
                 'quantity_available' => $request->get('quantity_available')
             ]);
-    
+            
             $product->save();
+
+            return redirect('/')->with('success', 'Produto criado com sucesso.'); 
         } catch (\Exception $e) {
             if ($e->getCode() == 23000) {                
                 return back()->withErrors('Já existe um produto com o mesmo SKU'); 
             }
         }
           
-        return redirect('/')->with('success', 'Produto criado com sucesso.'); 
     }
 
     /**
@@ -73,15 +74,15 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for decrease the specified resource.
      *
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function decrease($id)
     {
         $product = Product::find($id);
-        return view('edit', compact('product'));
+        return view('decrease', compact('product'));
     }
 
     /**
@@ -91,7 +92,62 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateDecrease(Request $request, $id)
+    {
+        $request->validate([
+            'quantity_available'=>'required|regex:/^-?[0-9]+$/'
+        ]); 
+
+        $product = Product::find($id);
+
+        $newQuantity = $product->quantity_available - $request->get('quantity_available');
+        
+        if($newQuantity >= 0) {
+            $product->quantity_available = $newQuantity;
+            $product->save();            
+            
+            $productTransaction = new ProductTransactions([
+                'product_id' => $id,
+                'quantity' => -$request->get('quantity_available'),
+                'type' => 'Sistema'
+            ]);
+
+            $productTransaction->save();
+            
+            if($newQuantity < 100) {  
+                return redirect('/')->with(array(
+                    'success' => 'Baixa inserida com sucesso',
+                    'alert' => 'O produto ficou com um estoque baixo (Menor do que 100 unidades)'
+                ));                  
+            }      
+           
+            return redirect('/')->with('success', 'Baixa inserida com sucesso');
+        } else {
+            return back()->withErrors('Não existe quantidade disponível para baixa.'); 
+        }    
+        
+    }
+
+      /**
+     * Show the form for increase the specified resource.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function increase($id)
+    {
+        $product = Product::find($id);
+        return view('increase', compact('product'));
+    }
+
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function updateIncrease(Request $request, $id)
     {
         $request->validate([
             'quantity_available'=>'required|regex:/^-?[0-9]+$/'
@@ -99,16 +155,20 @@ class ProductController extends Controller
 
         $product = Product::find($id);
         
-        if($product->quantity_available >= $request->get('quantity_available')) {
-            $product->quantity_available -= $request->get('quantity_available');
-            $product->save();
-        } else {
-            return back()->withErrors('Não existe quantidade disponível para baixa.'); 
-        }      
-      
+        $product->quantity_available += $request->get('quantity_available');
+        $product->save();            
+            
+        $productTransaction = new ProductTransactions([
+            'product_id' => $id,
+            'quantity' => $request->get('quantity_available'),
+            'type' => 'Sistema'
+        ]);
 
-        return redirect('/')->with('success', 'Baixa inserida com sucesso');
+        $productTransaction->save();
+         
+        return redirect('/')->with('success', 'Estoque adicionado com sucesso');
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -15,13 +15,14 @@
         </div>
         <br /> 
         @endif
-        <form method="post" action="/update/{{ $product->id }}">
+        <form method="post" action="/updateDecrease/{{ $product->id }}">
             @csrf
           <div class="form-group">
               <label for="quantity_available">Quantidade:</label>
               <input type="text" class="form-control" name="quantity_available" placeholder="Informe a quantidade para ser dado baixa"/>
           </div>
-            <button type="submit" class="btn btn-primary">Dar baixa</button>
+          <button type="submit" class="btn btn-primary">Dar baixa</button>
+          <a href="/" class="btn btn-warning">Cancelar</a>
         </form>
     </div>
 </div>
