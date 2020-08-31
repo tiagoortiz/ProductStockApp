@@ -1,61 +1,74 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# ProductStockApp
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+ProductStockApp é um CRUD de produtos feito com Laravel.
 
-## About Laravel
+## Instalação
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 1. Clonar o repositório
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Você pode clonar o repositório através do comando git clone:
+```
+git clone https://github.com/tiagoortiz/ProductStockApp.git
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Caso preferir, pode realizar o download diretamente pelo Github.
 
-## Learning Laravel
+### 2. Instalar as dependências via composer
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Para que todas as dependências do projeto sejam instaladas, você precisa ter o composer instalado.
+Caso não tenha o composer instalado, você pode fazer o download [aqui](https://getcomposer.org/).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Após o composer instalado, execute o código abaixo para instalar as dependências do projeto
+```
+composer install
+```
 
-## Laravel Sponsors
+Continuamos com a instalação do npm para que o Bootstrap.css seja corretamente configurado.
+```
+npm install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Por fim, finalizamos a instalação das dependências com o comando:
+```
+composer require laravel/ui
+```
 
-### Premium Partners
+### 3. Criar uma cópia do arquivo .env
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+Precisamos gerar um arquivo .env para colocarmos as informações de configuração. Para isto, faça uma cópia 
+do arquivo '.env.example' e renomeie para '.env'.
 
-## Contributing
+### 4. Gerar uma chave de encriptação
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Por padrão, o Laravel exige uma chave de encriptação para seus projetos. Para isto, geramos a chave através do comando:
+```
+php artisan key:generate
+```
 
-## Code of Conduct
+### 5. Criar um banco de dados
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Crie o banco de dados e coloque as informações relativas ao mesmo dentro do arquivo '.env'.
 
-## Security Vulnerabilities
+### 6. Realize a migração do banco de dados
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Para iniciarmos o banco de dados com as tabelas necessárias, rode o comando:
+```
+php artisan migrate
+```
 
-## License
+### 7. Rode a aplicação
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Após todas etapas concluidas, podemos rodar a aplicação:
+```
+php artisan serve
+```
+
+O Laravel utiliza a porta 8000, então você poderá acessar no seu localhost:8000, em caso de instalação em ambiente local.
+
+## Especificações
+
+PHP v7.4.6
+Laravel Framework v7.26.1
+MariaDB v10.4.11
+Composer v1.10.10
+npm v6.14.5
