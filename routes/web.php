@@ -24,3 +24,7 @@ Route::delete('/delete/{id}', 'ProductController@destroy');
 Route::post('/store', 'ProductController@store');
 Route::post('/updateIncrease/{id}', 'ProductController@updateIncrease');
 Route::post('/updateDecrease/{id}', 'ProductController@updateDecrease');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
