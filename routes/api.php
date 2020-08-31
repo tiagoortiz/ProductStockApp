@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::put('baixar-produtos/{id}', 'ApiController@updateDecrease');
+Route::put('adicionar-produtos/{id}', 'ApiController@updateIncrease');
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
