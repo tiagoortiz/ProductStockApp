@@ -51,9 +51,13 @@ Crie o banco de dados e coloque as informações relativas ao mesmo dentro do ar
 
 ### 6. Realize a migração do banco de dados
 
-Para iniciarmos o banco de dados com as tabelas necessárias, rode o comando:
+Para iniciarmos o banco de dados com as tabelas necessárias, rode os comandos:
 ```
 php artisan migrate
+```
+
+```
+php artisan db:seed --force
 ```
 
 ### 7. Rode a aplicação
