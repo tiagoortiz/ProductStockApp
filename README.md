@@ -18,7 +18,12 @@ Caso preferir, pode realizar o download diretamente pelo Github.
 Para que todas as dependências do projeto sejam instaladas, você precisa ter o composer instalado.
 Caso não tenha o composer instalado, você pode fazer o download [aqui](https://getcomposer.org/).
 
-Após o composer instalado, execute o código abaixo para instalar as dependências do projeto
+Após o composer instalado, inciamos a instalação das dependências com o comando:
+```
+composer require laravel/ui
+```
+
+Execute o código abaixo para instealar as dependências do projeto
 ```
 composer install
 ```
@@ -26,11 +31,6 @@ composer install
 Continuamos com a instalação do npm para que o Bootstrap.css seja corretamente configurado.
 ```
 npm install
-```
-
-Por fim, finalizamos a instalação das dependências com o comando:
-```
-composer require laravel/ui
 ```
 
 ### 3. Criar uma cópia do arquivo .env
@@ -67,7 +67,7 @@ Após todas etapas concluidas, podemos rodar a aplicação:
 php artisan serve
 ```
 
-O Laravel utiliza a porta 8000, então você poderá acessar no seu localhost:8000, em caso de instalação em ambiente local.
+O Laravel utiliza a porta 8000, então você poderá acessar no seu localhost:8000, em caso de instalação em ambiente local,  com e-mail 'admin@admin.com' e senha 'admin'.
 
 ## Especificações
 
