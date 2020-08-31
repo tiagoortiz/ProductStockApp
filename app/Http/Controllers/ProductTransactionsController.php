@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ProductTransactions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductTransactionsController extends Controller
 {
@@ -13,8 +14,25 @@ class ProductTransactionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $data = array();
+
+        $transactions = DB::table('product_Transactions')
+            ->leftJoin('products', 'product_transactions.product_id', '=', 'products.id')
+            ->select('products.sku', 'products.name', 'product_transactions.quantity', 'product_transactions.type')
+            ->whereDate('product_transactions.created_at', '=', date('Y-m-d'))   
+            ->get();
+
+        $data['transactions'] = $transactions;
+
+        $lowStockProducts = DB::table('products')
+        ->select('sku', 'name', 'quantity_available')    
+        ->where('quantity_available', '<', 100)
+        ->get();
+
+        $data['lowStockProducts'] = $lowStockProducts;
+        
+        return view('transactions_index', compact('data'));
     }
 
     /**
